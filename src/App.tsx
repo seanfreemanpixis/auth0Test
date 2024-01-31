@@ -15,6 +15,7 @@ function App() {
       authorizationParams={{
         redirect_uri: window.location.origin,
       }}
+      cookieDomain=".vercel.app"
     >
       <>
         <Authenticate />
