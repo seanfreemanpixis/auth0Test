@@ -14,6 +14,7 @@ export const Authenticate = () => {
     if (isAuthenticated && !isLoading && user) {
       try {
         setToken(await getAccessTokenSilently());
+        console.log("toien fetched");
       } catch (e) {
         console.error("failed fetaching token", e);
       }
@@ -24,6 +25,14 @@ export const Authenticate = () => {
   }, []);
   const [token, setToken] = useState("");
   useEffect(() => {
+    console.log(
+      "useEffect: isAuthenticated",
+      isAuthenticated,
+      " isLoading",
+      isLoading,
+      " token ",
+      token
+    );
     !isAuthenticated && !isLoading && loginWithRedirect();
 
     let clear = window.setInterval(() => {
