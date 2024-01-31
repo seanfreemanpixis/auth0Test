@@ -22,9 +22,11 @@ export const Authenticate = () => {
         }
       }
     };
+
     let clear = window.setInterval(() => {
       getToken();
-    }, 20000);
+      console.log("token fetched ");
+    }, 10000);
     return () => clearInterval(clear);
   }, [isLoading, isAuthenticated, user]);
 
