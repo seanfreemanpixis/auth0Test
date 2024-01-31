@@ -15,7 +15,11 @@ export const Authenticate = () => {
     !isAuthenticated && !isLoading && loginWithRedirect();
     const getToken = async () => {
       if (isAuthenticated && !isLoading && user) {
-        setToken(await getAccessTokenSilently());
+        try {
+          setToken(await getAccessTokenSilently());
+        } catch (e) {
+          console.error("failed fetaching token", e);
+        }
       }
     };
     getToken();
