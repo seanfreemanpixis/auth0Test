@@ -13,7 +13,7 @@ export const Authenticate = () => {
       {user ? (
         <div
           onClick={() => {
-            logout();
+            logout({ logoutParams: { returnTo: window.location.origin } });
             localStorage.clear();
           }}
         >
