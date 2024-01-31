@@ -1,12 +1,26 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export const Authenticate = () => {
-  const { isAuthenticated, logout, isLoading, user, loginWithRedirect } =
-    useAuth0();
+  const {
+    isAuthenticated,
+    getAccessTokenSilently,
+    logout,
+    isLoading,
+    user,
+    loginWithRedirect,
+  } = useAuth0();
+  const [token, setToken] = useState("");
   useEffect(() => {
     !isAuthenticated && !isLoading && loginWithRedirect();
-  }, [isLoading, isAuthenticated]);
+    const getToken = async () => {
+      if (isAuthenticated && !isLoading && user) {
+        setToken(await getAccessTokenSilently());
+      }
+    };
+    getToken();
+  }, [isLoading, isAuthenticated, user]);
+
   return (
     <>
       {isLoading && "logging you in"}{" "}
@@ -17,7 +31,7 @@ export const Authenticate = () => {
             localStorage.clear();
           }}
         >
-          {" "}
+          {token}
           click to logout : {user.email}
         </div>
       ) : (
