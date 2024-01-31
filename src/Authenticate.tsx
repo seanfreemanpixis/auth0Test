@@ -10,18 +10,21 @@ export const Authenticate = () => {
     user,
     loginWithRedirect,
   } = useAuth0();
+  const getToken = async () => {
+    if (isAuthenticated && !isLoading && user) {
+      try {
+        setToken(await getAccessTokenSilently());
+      } catch (e) {
+        console.error("failed fetaching token", e);
+      }
+    }
+  };
+  useEffect(() => {
+    getToken();
+  }, []);
   const [token, setToken] = useState("");
   useEffect(() => {
     !isAuthenticated && !isLoading && loginWithRedirect();
-    const getToken = async () => {
-      if (isAuthenticated && !isLoading && user) {
-        try {
-          setToken(await getAccessTokenSilently());
-        } catch (e) {
-          console.error("failed fetaching token", e);
-        }
-      }
-    };
 
     let clear = window.setInterval(() => {
       getToken();
@@ -33,6 +36,8 @@ export const Authenticate = () => {
   return (
     <>
       {isLoading && "logging you in"} {token} <br />
+      <button onClick={getToken}>get access token</button>
+      <br />
       {user ? (
         <div
           onClick={() => {
