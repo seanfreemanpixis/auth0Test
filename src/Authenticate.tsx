@@ -23,7 +23,7 @@ export const Authenticate = () => {
 
   return (
     <>
-      {isLoading && "logging you in"}{" "}
+      {isLoading && "logging you in"} {token} <br />
       {user ? (
         <div
           onClick={() => {
@@ -31,7 +31,6 @@ export const Authenticate = () => {
             localStorage.clear();
           }}
         >
-          {token}
           click to logout : {user.email}
         </div>
       ) : (
